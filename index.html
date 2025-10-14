@@ -12,232 +12,211 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica', sans-serif;
             background: #000;
             color: #fff;
-            overflow: hidden;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 2rem;
             position: relative;
+            overflow: hidden;
         }
 
-        /* Harsh lines background */
-        .background {
+        /* Background effect */
+        .bg-gradient {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                linear-gradient(90deg, transparent 49.5%, rgba(255,255,255,0.03) 49.5%, rgba(255,255,255,0.03) 50.5%, transparent 50.5%),
-                linear-gradient(0deg, transparent 49.5%, rgba(255,255,255,0.03) 49.5%, rgba(255,255,255,0.03) 50.5%, transparent 50.5%);
-            background-size: 100px 100px;
+            background: radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0.8) 0%, #000 100%);
             z-index: 0;
         }
 
-        /* Content container */
+        /* Scanning line effect */
+        .scan-line {
+            position: fixed;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            top: 0;
+            animation: scan 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* Main content */
         .container {
             position: relative;
             z-index: 10;
-            text-align: left;
-            max-width: 1000px;
-            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
         }
 
-        /* Site name */
-        .site-name {
-            font-size: 0.9rem;
-            letter-spacing: 0.3em;
+        /* Site identifier */
+        .site-id {
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
             text-transform: lowercase;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 6rem;
+            color: rgba(255, 255, 255, 0.25);
+            margin-bottom: 4rem;
             font-weight: 400;
         }
 
         /* Main statement */
         .statement {
-            font-size: clamp(2.5rem, 7vw, 5rem);
-            line-height: 1.1;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 4rem;
-            text-transform: uppercase;
+            margin-bottom: 3rem;
         }
 
-        .statement .line {
+        .statement-line {
             display: block;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            line-height: 1.35;
+            font-weight: 300;
+            letter-spacing: -0.01em;
             opacity: 0;
-            transform: translateX(-20px);
+            transform: translateY(15px);
         }
 
-        .statement .line:nth-child(1) {
-            animation: slideIn 0.6s ease-out 0.2s forwards;
+        .statement-line:nth-child(1) {
+            color: rgba(255, 255, 255, 0.5);
+            animation: slideUp 0.7s ease-out 0.3s forwards;
         }
 
-        .statement .line:nth-child(2) {
-            animation: slideIn 0.6s ease-out 0.4s forwards;
+        .statement-line:nth-child(2) {
+            color: rgba(255, 255, 255, 0.7);
+            animation: slideUp 0.7s ease-out 0.6s forwards;
         }
 
-        .statement .line:nth-child(3) {
-            animation: slideIn 0.6s ease-out 0.6s forwards;
+        .statement-line:nth-child(3) {
             color: #fff;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            font-weight: 400;
+            margin-top: 1.5rem;
+            animation: slideUp 0.7s ease-out 0.9s forwards;
         }
 
-        @keyframes slideIn {
+        @keyframes slideUp {
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0);
             }
         }
 
-        /* Declaration */
-        .declaration {
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 400;
-            letter-spacing: 0.1em;
+        /* Description */
+        .description {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
             line-height: 1.8;
-            max-width: 600px;
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            max-width: 550px;
+            margin: 0 auto;
             opacity: 0;
-            animation: fadeIn 1s ease-out 1s forwards;
+            animation: fadeIn 0.8s ease-out 1.3s forwards;
         }
 
-        .declaration .emphasis {
+        .description .highlight {
             color: #fff;
-            font-weight: 700;
+            font-weight: 400;
         }
 
         @keyframes fadeIn {
             to { opacity: 1; }
         }
 
-        /* Cursor block */
-        .cursor-block {
+        /* Breathing dot */
+        .dot {
             display: inline-block;
-            width: 0.6em;
-            height: 0.9em;
+            width: 5px;
+            height: 5px;
             background: #fff;
-            margin-left: 6px;
-            animation: blink 1s infinite;
-            vertical-align: baseline;
+            border-radius: 50%;
+            margin-left: 4px;
+            animation: breathe 2.5s ease-in-out infinite;
         }
 
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
+        @keyframes breathe {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
         }
 
         /* Footer */
         .footer {
             position: fixed;
             bottom: 2rem;
-            right: 2rem;
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.3);
-            letter-spacing: 0.2em;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.2);
             z-index: 10;
-            text-align: right;
             opacity: 0;
-            animation: fadeIn 2s ease-out 1.5s forwards;
-        }
-
-        .footer .year {
-            display: block;
-            margin-top: 0.3rem;
-            font-size: 0.6rem;
+            animation: fadeIn 1s ease-out 2s forwards;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .container {
+        @media (max-width: 600px) {
+            body {
                 padding: 1.5rem;
-                text-align: left;
             }
-            
-            .site-name {
-                margin-bottom: 4rem;
+
+            .site-id {
+                margin-bottom: 3rem;
+                font-size: 0.7rem;
             }
 
             .statement {
-                margin-bottom: 3rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .statement-line:nth-child(3) {
+                margin-top: 1rem;
             }
 
             .footer {
                 bottom: 1.5rem;
-                right: 1.5rem;
+                font-size: 0.6rem;
             }
-        }
-
-        /* Glitch effect on statement */
-        .statement .line:hover {
-            animation: glitch 0.3s ease-in-out;
-        }
-
-        @keyframes glitch {
-            0%, 100% { transform: translateX(0); }
-            33% { transform: translateX(-3px); }
-            66% { transform: translateX(3px); }
         }
     </style>
 </head>
 <body>
-    <div class="background"></div>
+    <div class="bg-gradient"></div>
+    <div class="scan-line"></div>
 
     <div class="container">
-        <div class="site-name">egoisuto</div>
-        
-        <h1 class="statement">
-            <span class="line">I CHOOSE.</span>
-            <span class="line">NO EXCUSES.</span>
-            <span class="line">ONLY WILL.</span>
-        </h1>
+        <div class="site-id">egoisuto</div>
 
-        <div class="declaration">
-            Strip the <span class="emphasis">should</span>.<br>
-            Strip the <span class="emphasis">obligation</span>.<br>
-            What's left? <span class="emphasis">ME</span>.<span class="cursor-block"></span>
+        <div class="statement">
+            <span class="statement-line">You hide behind "should".</span>
+            <span class="statement-line">You claim wants you don't pursue.</span>
+            <span class="statement-line">What are you without excuses?</span>
+        </div>
+
+        <div class="description">
+            Fragment strips inhibitions.<br>
+            Fragment forces <span class="highlight">choice</span>.<br>
+            What's left is <span class="highlight">you</span>.<span class="dot"></span>
         </div>
     </div>
 
     <div class="footer">
-        fragment<span class="year">MMXXV</span>
+        writings on ego · truth · will
     </div>
-
-    <script>
-        // Aggressive cursor tracking
-        let lastX = 0, lastY = 0;
-        let isMoving = false;
-
-        document.addEventListener('mousemove', (e) => {
-            const deltaX = e.clientX - lastX;
-            const deltaY = e.clientY - lastY;
-            const speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            
-            if (speed > 20 && !isMoving) {
-                isMoving = true;
-                document.body.style.background = '#0a0a0a';
-                setTimeout(() => {
-                    document.body.style.background = '#000';
-                    isMoving = false;
-                }, 100);
-            }
-            
-            lastX = e.clientX;
-            lastY = e.clientY;
-        });
-
-        // Random background flicker
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                const bg = document.querySelector('.background');
-                bg.style.opacity = 0.5;
-                setTimeout(() => bg.style.opacity = 1, 50);
-            }
-        }, 3000);
-    </script>
 </body>
 </html>
