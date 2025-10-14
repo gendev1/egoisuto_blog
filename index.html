@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>egoisuto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Harsh lines background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 49.5%, rgba(255,255,255,0.03) 49.5%, rgba(255,255,255,0.03) 50.5%, transparent 50.5%),
+                linear-gradient(0deg, transparent 49.5%, rgba(255,255,255,0.03) 49.5%, rgba(255,255,255,0.03) 50.5%, transparent 50.5%);
+            background-size: 100px 100px;
+            z-index: 0;
+        }
+
+        /* Content container */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: left;
+            max-width: 1000px;
+            padding: 2rem;
+        }
+
+        /* Site name */
+        .site-name {
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            text-transform: lowercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 6rem;
+            font-weight: 400;
+        }
+
+        /* Main statement */
+        .statement {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+        }
+
+        .statement .line {
+            display: block;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .statement .line:nth-child(1) {
+            animation: slideIn 0.6s ease-out 0.2s forwards;
+        }
+
+        .statement .line:nth-child(2) {
+            animation: slideIn 0.6s ease-out 0.4s forwards;
+        }
+
+        .statement .line:nth-child(3) {
+            animation: slideIn 0.6s ease-out 0.6s forwards;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Declaration */
+        .declaration {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            line-height: 1.8;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        .declaration .emphasis {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Cursor block */
+        .cursor-block {
+            display: inline-block;
+            width: 0.6em;
+            height: 0.9em;
+            background: #fff;
+            margin-left: 6px;
+            animation: blink 1s infinite;
+            vertical-align: baseline;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            z-index: 10;
+            text-align: right;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 1.5s forwards;
+        }
+
+        .footer .year {
+            display: block;
+            margin-top: 0.3rem;
+            font-size: 0.6rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                text-align: left;
+            }
+            
+            .site-name {
+                margin-bottom: 4rem;
+            }
+
+            .statement {
+                margin-bottom: 3rem;
+            }
+
+            .footer {
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+        }
+
+        /* Glitch effect on statement */
+        .statement .line:hover {
+            animation: glitch 0.3s ease-in-out;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translateX(0); }
+            33% { transform: translateX(-3px); }
+            66% { transform: translateX(3px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <div class="container">
+        <div class="site-name">egoisuto</div>
+        
+        <h1 class="statement">
+            <span class="line">I CHOOSE.</span>
+            <span class="line">NO EXCUSES.</span>
+            <span class="line">ONLY WILL.</span>
+        </h1>
+
+        <div class="declaration">
+            Strip the <span class="emphasis">should</span>.<br>
+            Strip the <span class="emphasis">obligation</span>.<br>
+            What's left? <span class="emphasis">ME</span>.<span class="cursor-block"></span>
+        </div>
+    </div>
+
+    <div class="footer">
+        fragment<span class="year">MMXXV</span>
+    </div>
+
+    <script>
+        // Aggressive cursor tracking
+        let lastX = 0, lastY = 0;
+        let isMoving = false;
+
+        document.addEventListener('mousemove', (e) => {
+            const deltaX = e.clientX - lastX;
+            const deltaY = e.clientY - lastY;
+            const speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            if (speed > 20 && !isMoving) {
+                isMoving = true;
+                document.body.style.background = '#0a0a0a';
+                setTimeout(() => {
+                    document.body.style.background = '#000';
+                    isMoving = false;
+                }, 100);
+            }
+            
+            lastX = e.clientX;
+            lastY = e.clientY;
+        });
+
+        // Random background flicker
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                const bg = document.querySelector('.background');
+                bg.style.opacity = 0.5;
+                setTimeout(() => bg.style.opacity = 1, 50);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
