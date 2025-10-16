@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        /* Background effect */
+        /* Background effect - now with chaos energy */
         .bg-gradient {
             position: fixed;
             top: 0;
@@ -35,16 +35,19 @@
             z-index: 0;
         }
 
-        /* Scanning line effect */
+        /* Multiple scanning lines - more chaotic */
         .scan-line {
             position: fixed;
             width: 100%;
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
             top: 0;
-            animation: scan 10s linear infinite;
             z-index: 1;
         }
+        
+        .scan-line:nth-child(1) { animation: scan 10s linear infinite; }
+        .scan-line:nth-child(2) { animation: scan 15s linear infinite 2s; opacity: 0.5; }
+        .scan-line:nth-child(3) { animation: scan 8s linear infinite 5s; opacity: 0.3; }
 
         @keyframes scan {
             0% { top: 0; }
@@ -127,11 +130,31 @@
             font-weight: 400;
         }
 
+        .description .chaos {
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+        }
+
         @keyframes fadeIn {
             to { opacity: 1; }
         }
 
-        /* Breathing dot */
+        /* Glitch effect for Ron energy */
+        .glitch {
+            position: relative;
+            display: inline-block;
+            animation: glitch 3s ease-in-out infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            95% { transform: translate(0); }
+            96% { transform: translate(-2px, 0); }
+            97% { transform: translate(2px, 0); }
+            98% { transform: translate(0); }
+        }
+
+        /* Breathing dots */
         .dot {
             display: inline-block;
             width: 5px;
@@ -141,6 +164,9 @@
             margin-left: 4px;
             animation: breathe 2.5s ease-in-out infinite;
         }
+
+        .dot:nth-child(2) { animation-delay: 0.5s; }
+        .dot:nth-child(3) { animation-delay: 1s; }
 
         @keyframes breathe {
             0%, 100% {
@@ -198,25 +224,35 @@
 <body>
     <div class="bg-gradient"></div>
     <div class="scan-line"></div>
+    <div class="scan-line"></div>
+    <div class="scan-line"></div>
 
     <div class="container">
         <div class="site-id">egoisuto</div>
 
         <div class="statement">
-            <span class="statement-line">You hide behind "should".</span>
-            <span class="statement-line">You claim wants you don't pursue.</span>
-            <span class="statement-line">What are you without excuses?</span>
+            <span class="statement-line">You reorganize when stressed.</span>
+            <span class="statement-line">You buy domains at 3AM.</span>
+            <span class="statement-line">What if your chaos <span class="glitch">had a friend?</span></span>
         </div>
 
         <div class="description">
-            Fragment strips inhibitions.<br>
-            Fragment forces <span class="highlight">choice</span>.<br>
-            What's left is <span class="highlight">you</span>.<span class="dot"></span>
+            Fragment doesn't fix you.<br>
+            Fragment <span class="highlight">maps your patterns</span>.<br>
+            Fragment notices when you <span class="chaos">actually</span> work.<br>
+            <br>
+            It starts <span class="highlight">adorably wrong</span>.<br>
+            "You mentioned deadlines 7 times! You love deadlines!"<br>
+            <br>
+            It becomes <span class="highlight">weirdly right</span>.<br>
+            "You always breakthrough after bookshelf reorganization."<br>
+            <br>
+            Maximum chaos, minimum catastrophe<span class="dot"></span><span class="dot"></span><span class="dot"></span>
         </div>
     </div>
 
     <div class="footer">
-        writings on ego · truth · will
+        your digital companion that gets it wrong until it gets you
     </div>
 </body>
 </html>
