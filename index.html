@@ -16,11 +16,8 @@
             background: #000;
             color: #fff;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            overflow: hidden;
+            overflow-x: hidden; /* Only hide horizontal overflow */
+            position: relative;
         }
 
         /* Subtle animated grain */
@@ -51,6 +48,8 @@
             z-index: 10;
             max-width: 900px;
             width: 100%;
+            margin: 0 auto;
+            padding: 8rem 2rem 10rem 2rem; /* Add proper padding */
         }
 
         /* Brand mark */
@@ -63,18 +62,19 @@
             text-transform: lowercase;
             color: rgba(255, 255, 255, 0.3);
             font-weight: 300;
+            z-index: 100;
         }
 
         /* Manifesto sections */
         .statement {
-            margin-bottom: 8rem;
+            margin-bottom: 6rem; /* Reduced from 8rem */
             opacity: 0;
             animation: fadeUp 1.2s ease-out forwards;
         }
 
-        .statement:nth-child(2) { animation-delay: 0.3s; }
-        .statement:nth-child(3) { animation-delay: 0.6s; }
-        .statement:nth-child(4) { animation-delay: 0.9s; }
+        .statement:nth-child(1) { animation-delay: 0.3s; }
+        .statement:nth-child(2) { animation-delay: 0.6s; }
+        .statement:nth-child(3) { animation-delay: 0.9s; }
 
         @keyframes fadeUp {
             from {
@@ -112,8 +112,9 @@
 
         /* The question */
         .question {
-            margin-top: 8rem;
+            margin-top: 6rem;
             padding-top: 4rem;
+            padding-bottom: 4rem; /* Add padding bottom */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             opacity: 0;
             animation: fadeUp 1.2s ease-out 1.2s forwards;
@@ -142,7 +143,7 @@
             text-align: right;
             opacity: 0;
             animation: fadeIn 1s ease-out 2s forwards;
-            z-index: 10;
+            z-index: 100;
         }
 
         @keyframes fadeIn {
@@ -170,13 +171,22 @@
 
         /* Mobile */
         @media (max-width: 768px) {
+            .container {
+                padding: 6rem 1.5rem 8rem 1.5rem;
+            }
+
             .mark {
                 top: 2rem;
                 left: 2rem;
             }
 
             .statement {
-                margin-bottom: 5rem;
+                margin-bottom: 4rem;
+            }
+
+            .question {
+                margin-top: 4rem;
+                padding-top: 3rem;
             }
 
             .footer {
