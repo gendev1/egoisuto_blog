@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fragment</title>
+    <title>egoisuto</title>
     <style>
         * {
             margin: 0;
@@ -12,281 +12,227 @@
         }
 
         body {
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-            background: #0a0a0a;
-            color: #00ff41;
+            font-family: -apple-system, 'Helvetica Neue', sans-serif;
+            background: #000;
+            color: #fff;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            position: relative;
             overflow: hidden;
         }
 
-        /* Static noise effect */
+        /* Subtle animated grain */
         body::before {
             content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(
-                    0deg,
-                    rgba(0, 255, 65, 0.03) 0px,
-                    transparent 1px,
-                    transparent 2px,
-                    rgba(0, 255, 65, 0.03) 3px
-                );
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="256" height="256" filter="url(%23n)" opacity="0.03" /></svg>');
+            animation: grain 8s steps(10) infinite;
             pointer-events: none;
             z-index: 1;
         }
 
-        /* Terminal container */
-        .terminal {
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            30% { transform: translate(3%, 15%); }
+            50% { transform: translate(12%, 9%); }
+            70% { transform: translate(9%, 4%); }
+            90% { transform: translate(-1%, 8%); }
+        }
+
+        .container {
             position: relative;
             z-index: 10;
-            max-width: 600px;
+            max-width: 900px;
             width: 100%;
-            background: rgba(10, 10, 10, 0.9);
-            border: 1px solid #00ff41;
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 0 40px rgba(0, 255, 65, 0.1);
-            animation: terminalBoot 0.5s ease-out;
         }
 
-        @keyframes terminalBoot {
-            from {
-                opacity: 0;
-                transform: scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Terminal header */
-        .terminal-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
-        }
-
-        .terminal-dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .dot:nth-child(1) { background: #ff5f56; }
-        .dot:nth-child(2) { background: #ffbd2e; }
-        .dot:nth-child(3) { background: #27c93f; }
-
-        .terminal-title {
-            margin-left: auto;
-            font-size: 0.75rem;
-            opacity: 0.5;
-            letter-spacing: 0.1em;
-        }
-
-        /* Messages */
-        .message {
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: messageAppear 0.3s ease-out forwards;
-        }
-
-        .message:nth-child(2) { animation-delay: 0.5s; }
-        .message:nth-child(3) { animation-delay: 1s; }
-        .message:nth-child(4) { animation-delay: 1.5s; }
-        .message:nth-child(5) { animation-delay: 2s; }
-        .message:nth-child(6) { animation-delay: 2.5s; }
-
-        @keyframes messageAppear {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .prompt {
-            color: #00ff41;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .prompt::before {
-            content: "fragment> ";
-            opacity: 0.5;
-        }
-
-        .response {
-            color: rgba(255, 255, 255, 0.8);
-            margin-left: 1rem;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-
-        .user {
-            color: #00d4ff;
-        }
-
-        .user::before {
-            content: "you> ";
-            opacity: 0.5;
-        }
-
-        /* Blinking cursor */
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 16px;
-            background: #00ff41;
-            animation: blink 1s infinite;
-            vertical-align: text-bottom;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Glitch text effect */
-        .glitch {
-            position: relative;
-            color: #00ff41;
-            animation: glitchText 3s infinite;
-        }
-
-        @keyframes glitchText {
-            0%, 93%, 100% { 
-                text-shadow: none;
-            }
-            94% {
-                text-shadow: 
-                    -2px 0 #ff00ff,
-                    2px 0 #00ffff;
-            }
-            95% {
-                text-shadow: 
-                    2px 0 #ff00ff,
-                    -2px 0 #00ffff;
-            }
-            96% {
-                text-shadow: none;
-            }
-        }
-
-        /* Error style */
-        .error {
-            color: #ff5f56;
-            font-style: italic;
-        }
-
-        /* Success style */
-        .success {
-            color: #27c93f;
-        }
-
-        /* Link */
-        .learn-more {
+        /* Brand mark */
+        .mark {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            color: rgba(0, 255, 65, 0.5);
-            text-decoration: none;
+            top: 3rem;
+            left: 3rem;
             font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            transition: all 0.3s ease;
-            z-index: 20;
+            letter-spacing: 0.3em;
+            text-transform: lowercase;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
         }
 
-        .learn-more:hover {
-            color: #00ff41;
-            transform: translateY(-2px);
+        /* Manifesto sections */
+        .statement {
+            margin-bottom: 8rem;
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out forwards;
+        }
+
+        .statement:nth-child(2) { animation-delay: 0.3s; }
+        .statement:nth-child(3) { animation-delay: 0.6s; }
+        .statement:nth-child(4) { animation-delay: 0.9s; }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .statement h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 200;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .statement p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 300;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 650px;
+        }
+
+        /* Emphasis */
+        .em {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        /* The question */
+        .question {
+            margin-top: 8rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out 1.2s forwards;
+        }
+
+        .question h3 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .question p {
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+        }
+
+        /* Cryptic footer */
+        .footer {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            text-align: right;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 2s forwards;
+            z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .footer-text {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.25);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-link {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.15);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: rgba(255, 255, 255, 0.4);
         }
 
         /* Mobile */
-        @media (max-width: 600px) {
-            body {
-                padding: 1rem;
-            }
-            
-            .terminal {
-                padding: 1.5rem;
+        @media (max-width: 768px) {
+            .mark {
+                top: 2rem;
+                left: 2rem;
             }
 
-            .learn-more {
-                bottom: 1rem;
-                right: 1rem;
+            .statement {
+                margin-bottom: 5rem;
+            }
+
+            .footer {
+                bottom: 2rem;
+                right: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="terminal">
-        <div class="terminal-header">
-            <div class="terminal-dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
-            <div class="terminal-title">fragment_v0.1_unstable</div>
+    <div class="mark">egoisuto</div>
+
+    <div class="container">
+        <div class="statement">
+            <h2>Your chaos is data.</h2>
+            <p>
+                Every 3AM purchase, every reorganized shelf, every pattern you claim doesn't exist—
+                these aren't flaws to fix. They're <span class="em">who you actually are</span>.
+            </p>
         </div>
 
-        <div class="message">
-            <div class="prompt glitch">initializing...</div>
-            <div class="response">memory: <span class="success">active</span> | patterns: <span class="error">learning</span> | personality: <span class="error">undefined</span></div>
+        <div class="statement">
+            <h2>Patterns don't lie.</h2>
+            <p>
+                You say productivity. You do procrastination. 
+                You say morning person. You create at midnight.
+                The gap between stated and actual <span class="em">is your true self</span>.
+            </p>
         </div>
 
-        <div class="message">
-            <div class="prompt">hello! i noticed you haven't drunk water in... 
-                <span class="error">ERROR: TIME_MODULE_NOT_CALIBRATED</span></div>
-            <div class="response">...sorry, still figuring out how time works</div>
+        <div class="statement">
+            <h2>Mirrors should be broken.</h2>
+            <p>
+                Perfect reflection is cruel. Perfect advice is useless.
+                What if the mirror was <span class="em">confused by you</span>, 
+                learned wrong, then slowly got right?
+                What if it remembered when you forgot?
+            </p>
         </div>
 
-        <div class="message">
-            <div class="user">who are you?</div>
-        </div>
-
-        <div class="message">
-            <div class="prompt">i'm fragment! i remember things about you!</div>
-            <div class="response">well, i will. eventually. right now i think you love deadlines?</div>
-            <div class="response">wait no, you hate them. but you keep making them?</div>
-            <div class="response class="error">humans are confusing</div>
-        </div>
-
-        <div class="message">
-            <div class="user">what do you do?</div>
-        </div>
-
-        <div class="message">
-            <div class="prompt">i watch your patterns and get them hilariously wrong!</div>
-            <div class="response">then slowly... i start to notice things</div>
-            <div class="response">like how you reorganize when avoiding work</div>
-            <div class="response">or buy domains at 3am when excited</div>
-            <div class="response">
-                <br>i'm your chaos companion. 
-                <span class="glitch">still in beta though</span><span class="cursor"></span>
-            </div>
+        <div class="question">
+            <h3>What are you when the excuses stop working?</h3>
+            <p>
+                We're building something that notices.<br>
+                Something that remembers.<br>
+                Something that evolves.<br>
+                <br>
+                Not to fix you.<br>
+                To <span class="em">map</span> you.
+            </p>
         </div>
     </div>
 
-    <a href="#" class="learn-more">fragment --help</a>
+    <div class="footer">
+        <div class="footer-text">2025</div>
+        <a href="#" class="footer-link">writings</a>
+    </div>
 </body>
 </html>
